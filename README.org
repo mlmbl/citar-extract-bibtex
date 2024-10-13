@@ -1,0 +1,55 @@
+#+TITLE: citar-extract-bibtex
+#+AUTHOR: mlmbl
+
+* Overview
+
+- Name :: citar-extract-bibtex.el
+- Version :: 0.1
+- Author :: mlmbl
+- URL :: https://github.com/mlmbl/citar-extract-bibtex
+- Keywords :: citar, bibtex, org-mode
+
+  
+=citar-extract-bibtex= is a tool designed to work alongside the citar package, providing functionality for extracting and exporting BibTeX entries from citations in Org-mode files. This package scans the current Org-mode buffer for cited references, retrieves their corresponding BibTeX entries from the ~citar bibliography~, and formats them into a BibTeX file.
+
+This is especially useful when you want to generate a standalone BibTeX file that contains only the references cited within a specific document, making it easier to manage and share bibliographies related to specific papers or projects.
+
+* Instrallation
+
+** Manual install
+
+1. Clone or download the package from the GitHub repository:
+   #+BEGIN_SRC bash
+     git clone https://github.com/mlmbl/citar-extract-bibtex.git
+   #+END_SRC
+2. Add the directory to your Emacs load-path. You can do this by adding the following line to your Emacs configuration file (init.el or .emacs.d):
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'load-path "/path/to/citar-extract-bibtex")
+   #+END_SRC
+3. Load the package
+   #+BEGIN_SRC emacs-lisp
+     (require 'citar-extract-bibtex)
+   #+END_SRC
+
+** Installation using el-get
+#+BEGIN_SRC emacs-lisp
+  (el-get-bundle citar-extract-bibtex
+    :url "https://github.com/mlmbl/citar-extract-bibtex.git")
+#+END_SRC
+
+** Installation using leaf.el
+#+BEGIN_SRC emacs-lisp
+  (leaf citar-extract-bibtex
+    :require t
+    :el-get citar-extract-bibtex
+    :el-get-url "https://github.com/mlmbl/citar-extract-bibtex.git")
+#+END_SRC
+
+** Dependencies
+- Emacs :: 27.1 or later
+- Org-mode (builtin) :: 9.6.15 or later
+- Citar :: 20240907.1157 (MELPA) or later
+
+** License
+
+This package is distributed under the MIT License.
