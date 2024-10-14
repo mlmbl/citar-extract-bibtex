@@ -20,24 +20,24 @@
 
 (defun citar-extract-bibtex-get-key (entry)
   "Return the citekey value from ENTRY, an alist representing a BibTeX entry."
-  (let ((type-entry (assoc-string "=key=" entry)))  ;; 'assoc-string'を使って文字列キーを検索
+  (let ((type-entry (assoc-string "=key=" entry)))
     (if type-entry
         (cdr type-entry)
       nil)))
 
 (defun citar-extract-bibtex-get-type (entry)
   "Return the type value (e.g., article, book) from ENTRY, an alist representing a BibTeX entry."
-  (let ((type-entry (assoc-string "=type=" entry)))  ;; 'assoc-string'を使って文字列キーを検索
+  (let ((type-entry (assoc-string "=type=" entry)))
     (if type-entry
-        (cdr type-entry)  ;; エントリが見つかれば、その値を返す
-      nil)))  ;; 見つからなければnilを返す
+        (cdr type-entry)
+      nil)))
 
 (defun citar-extract-bibtex-get-fields (entry)
   "Extract fields from ENTRY by removing the citekey and type.
 ENTRY is an alist representing a BibTeX entry, and the remaining
 key-value pairs after removal are the fields."
 (cl-remove-if (lambda (pair)
-               (string-match "=" (format "%s" (car pair))))  ;; キーにSUBSTRINGが含まれるかチェック
+               (string-match "=" (format "%s" (car pair))))
              entry))
 
 (defun citar-extract-bibtex-collect-citation ()
@@ -64,31 +64,31 @@ FIELDS is an alist representing the fields of a BibTeX entry."
 
 (defun citar-extract-bibtex-format-entry (citekey)
   "Reconstruct the BibTeX entry for CITEKEY from the citar-get-entry data."
-  (let* ((entry (citar-get-entry citekey))  ;; BibTeXエントリーのalistを取得
-         (entry-type (citar-extract-bibtex-get-type entry))  ;; @type{ を取得
-         (entry-key (citar-extract-bibtex-get-key entry))  ;; citekeyを取得
-         (fields (citar-extract-bibtex-get-fields entry)))  ;; =type= と =key= を除外したフィールドを取得
+  (let* ((entry (citar-get-entry citekey))
+         (entry-type (citar-extract-bibtex-get-type entry))
+         (entry-key (citar-extract-bibtex-get-key entry)) 
+         (fields (citar-extract-bibtex-get-fields entry)))
     (concat
-     (format "@%s{%s,\n" entry-type entry-key)  ;; @type{citekey, を生成
-     (citar-extract-bibtex-format-fields (reverse fields))  ;; フィールドを逆順にしてフォーマット
+     (format "@%s{%s,\n" entry-type entry-key)
+     (citar-extract-bibtex-format-fields (reverse fields))
      "\n}")))  ;; 閉じる
 
 (defun citar-extract-bibtex-to-file (output-file)
   "Collect all cited BibTeX entries from the current Org buffer and export them to OUTPUT-FILE."
   (interactive "FSave to file: ")
   ;; 1. Collect all citekeys from the Org buffer
-  (let ((citekeys (citar-extract-bibtex-collect-citation)))  ;; Collect cited keys
+  (let ((citekeys (citar-extract-bibtex-collect-citation)))
     (with-current-buffer (get-buffer-create "*Collected BibTeX Entries*")
-      (erase-buffer))  ;; Clear the buffer before starting
+      (erase-buffer))
 
     ;; 2. For each citekey, find the corresponding BibTeX entry and copy it
     (dolist (key citekeys)
       (message "Processing citekey: %s" key)
       (condition-case nil
-          (let ((bibtex-entry (citar-extract-bibtex-format-entry key)))  ;; Reconstruct the BibTeX entry
+          (let ((bibtex-entry (citar-extract-bibtex-format-entry key)))
             (with-current-buffer "*Collected BibTeX Entries*"
-              (goto-char (point-max))  ;; Move to the end of the buffer
-              (insert bibtex-entry "\n\n")))  ;; Insert the BibTeX entry
+              (goto-char (point-max))
+              (insert bibtex-entry "\n\n")))
         (error (message "Failed to process citekey: %s" key))))
 
     ;; 3. Write the collected BibTeX entries to the specified output file
