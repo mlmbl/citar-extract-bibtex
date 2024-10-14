@@ -31,18 +31,11 @@ This is especially useful when you want to generate a standalone BibTeX file tha
      (require 'citar-extract-bibtex)
    #+END_SRC
 
-** Installation using el-get
-#+BEGIN_SRC emacs-lisp
-  (el-get-bundle citar-extract-bibtex
-    :url "https://github.com/mlmbl/citar-extract-bibtex.git")
-#+END_SRC
-
 ** Installation using leaf.el
 #+BEGIN_SRC emacs-lisp
   (leaf citar-extract-bibtex
     :require t
-    :el-get citar-extract-bibtex
-    :el-get-url "https://github.com/mlmbl/citar-extract-bibtex.git")
+    :el-get mlmbl/citar-extract-bibtex)
 #+END_SRC
 
 ** Dependencies
