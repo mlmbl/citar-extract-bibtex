@@ -96,4 +96,5 @@ FIELDS is an alist representing the fields of a BibTeX entry."
       (write-region (point-min) (point-max) output-file))
     (message "BibTeX entries saved to %s" output-file)))
 
+(provide 'citar-extract-bibtex)
 ;;; citar-extract-bibtex.el ends here
